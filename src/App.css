@@ -1,0 +1,23 @@
+.paper{
+  min-height: 100vh;
+  min-width: 100vw;
+  border-radius: 0px;
+}
+
+.centre-div{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title{
+  font-family: 'Pacifico, cursive';
+}
+
+.subtitle{
+font-family: 'Raleway', sans-serif;
+}
+
+.content{
+  font-family: 'Source Code Pro', monospace;
+}
