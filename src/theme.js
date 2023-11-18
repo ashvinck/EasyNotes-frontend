@@ -17,6 +17,7 @@ export const customizations = (mode) => ({
       styleOverrides: {
         root: {
           fontWeight: 'bold',
+          fontFamily: 'Source Code Pro, monospace',
         },
       },
     },

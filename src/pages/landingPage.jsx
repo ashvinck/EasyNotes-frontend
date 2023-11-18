@@ -33,40 +33,33 @@ const StyledActionBox = styled(Box)(() => ({
   justifyContent: 'center',
 }));
 
-const StyledButton = styled(Button)(({ theme }) => ({
-  fontFamily: 'Source Code Pro, monospace',
-  fontWeight: 'bold',
-  textAlign: 'center',
-  margin: theme.spacing(2),
-}));
-
 const LandingPage = () => {
   return (
     <>
-    <Header/>
-    <CardWrapper>
-      <CardContent>
-        <StyledTitle variant='h3'>Welcome to</StyledTitle>
-        <StyledName variant='h2'>Easy Notes</StyledName>
-        <StyledDescription variant='subtitle1'>
-          Your Digital Note-Taking Companion.
-        </StyledDescription>
-      </CardContent>
-      <CardMedia
-        component='img'
-        image={easyNotesLogo}
-        alt='logo'
-        sx={{ maxHeight: '400px', maxWidth: '400px', }}
-      />
-      <StyledActionBox>
-        <CardActions>
-          <StyledButton variant='contained' color='primary'>
-            Get Started
-          </StyledButton>
-        </CardActions>
-      </StyledActionBox>
+      <Header />
+      <CardWrapper>
+        <CardContent>
+          <StyledTitle variant='h3'>Welcome to</StyledTitle>
+          <StyledName variant='h2'>Easy Notes</StyledName>
+          <StyledDescription variant='subtitle1'>
+            Your Digital Note-Taking Companion.
+          </StyledDescription>
+        </CardContent>
+        <CardMedia
+          component='img'
+          image={easyNotesLogo}
+          alt='logo'
+          sx={{ maxHeight: '400px', maxWidth: '400px' }}
+        />
+        <StyledActionBox>
+          <CardActions>
+            <Button variant='contained' color='primary'>
+              Get Started
+            </Button>
+          </CardActions>
+        </StyledActionBox>
       </CardWrapper>
-      </>
+    </>
   );
 };
 
