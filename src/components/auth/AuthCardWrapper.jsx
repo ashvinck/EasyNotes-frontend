@@ -2,8 +2,8 @@ import React from 'react';
 import styled from '@emotion/styled';
 import Box from '@mui/system/Box';
 
-import CardWrapper from './CardWrapper';
-import logo from '../assets/logo-48.png';
+import CardWrapper from '../CardWrapper';
+import logo from '../../assets/logo-48.png';
 import Typography from '@mui/material/Typography';
 
 const LogoTypography = styled(Typography)(({ theme }) => ({

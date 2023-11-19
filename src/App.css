@@ -4,6 +4,14 @@
   border-radius: 0px;
 }
 
+textarea {
+  border: none;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+}
+
 .centre-div{
   display: flex;
   align-items: center;
@@ -20,4 +28,20 @@ font-family: 'Raleway', sans-serif;
 
 .content{
   font-family: 'Source Code Pro', monospace;
+}
+.quill{
+  height: 100%;
+}
+.ql-toolbar.ql-snow{
+  height: max-content;
+}
+.ql-container.ql-snow{
+height: 95%;
+}
+.img{
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 20px;
+  margin: 10px;
+  mix-blend-mode:darken;
 }

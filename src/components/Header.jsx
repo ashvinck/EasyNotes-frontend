@@ -31,7 +31,7 @@ const LogoBox = styled(Box)(() => ({
 const Header = () => {
   const navigate = useNavigate();
   return (
-    <AppBar position='sticky' color='transparent'>
+    <AppBar position='sticky' color='transparent' elevation={0}>
       <Container maxWidth='xxl'>
         <Toolbar disableGutters>
           <StyledBox>
