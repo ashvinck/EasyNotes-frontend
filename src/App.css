@@ -34,9 +34,11 @@ font-family: 'Raleway', sans-serif;
 }
 .ql-toolbar.ql-snow{
   height: max-content;
+  border-style: none !important;
 }
 .ql-container.ql-snow{
 height: 95%;
+border-style: none !important;
 }
 .img{
   max-width: 200px;

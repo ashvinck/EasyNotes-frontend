@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { styled } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import { Hidden } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { updateSearchTerm } from '../features/notes/notesSlice';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -12,6 +13,9 @@ const Search = styled('div')(({ theme }) => ({
   marginLeft: theme.spacing(2),
   border: '1px solid #D3D3D3',
   width: 'auto',
+  [theme.breakpoints.down('sm')]: {
+    marginLeft: 0,
+  },
 }));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
@@ -35,38 +39,23 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const SearchBar = () => {
-  const [isVisible, setIsVisible] = useState(false);
-
-  const handleToggleSearchBar = () => {
-    setIsVisible(true);
+  const dispatch = useDispatch();
+  const handleSearchQuery = (event) => {
+    const searchValue = event.target.value;
+    dispatch(updateSearchTerm(searchValue));
   };
-
   return (
     <>
-      <Hidden smDown>
-        <Search>
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
-          <StyledInputBase
-            placeholder='Search...'
-            inputProps={{ 'aria-label': 'search' }}
-          />
-        </Search>
-      </Hidden>
-      <Hidden smUp>
-        <Search>
-          <SearchIconWrapper onClick={handleToggleSearchBar}>
-            <SearchIcon />
-          </SearchIconWrapper>
-          {isVisible && (
-            <StyledInputBase
-              placeholder='Search...'
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          )}
-        </Search>
-      </Hidden>
+      <Search>
+        <SearchIconWrapper>
+          <SearchIcon />
+        </SearchIconWrapper>
+        <StyledInputBase
+          placeholder='Search...'
+          inputProps={{ 'aria-label': 'search' }}
+          onChange={handleSearchQuery}
+        />
+      </Search>
     </>
   );
 };

@@ -6,6 +6,9 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import FolderIcon from '@mui/icons-material/Folder';
+import { useGetAllNotesQuery } from '../../../features/notes/notesApiSlice';
+import { useDispatch } from 'react-redux';
+import { updateSearchTerm } from '../../../features/notes/notesSlice';
 
 const StyledTypography = styled(Typography)(({ theme }) => ({
   padding: theme.spacing(2),
@@ -21,94 +24,23 @@ const StyledBoxWrapper = styled(Box)(({ theme }) => ({
 const Categories = () => {
   const [selectedIndex, setSelectedIndex] = useState(null);
 
+  const dispatch = useDispatch();
+
+  const username = localStorage.getItem('username');
+  const { data, isLoading } = useGetAllNotesQuery(username);
+
   const handleListItemClick = (event, category) => {
     setSelectedIndex(category);
+    dispatch(updateSearchTerm(category));
   };
 
-  const notesList = [
-    {
-      id: '1',
-      title: 'This is the title',
-      description: 'This is the description',
-      category: 'Note-1',
-    },
-    {
-      id: '2',
-      title: 'This is the thdh',
-      description: 'This is the description djcdj ',
-      category: 'Note-2',
-    },
-    {
-      id: '2',
-      title: 'This is the thdh',
-      description: 'This is the description djcdj ',
-      category: 'Note-3',
-    },
-    {
-      id: '2',
-      title: 'This is the thdh',
-      description: 'This is the description djcdj ',
-      category: 'Note-4',
-    },
-    {
-      id: '2',
-      title: 'This is the thdh',
-      description: 'This is the description djcdj ',
-      category: 'Note-5',
-    },
-    {
-      id: '2',
-      title: 'This is the thdh',
-      description: 'This is the description djcdj ',
-      category: 'Note-6',
-    },
-    {
-      id: '2',
-      title: 'This is the thdh',
-      description: 'This is the description djcdj ',
-      category: 'Note-7',
-    },
-    {
-      id: '2',
-      title: 'This is the thdh',
-      description: 'This is the description djcdj ',
-      category: 'Note-8',
-    },
-    {
-      id: '2',
-      title: 'This is the thdh',
-      description: 'This is the description djcdj ',
-      category: 'Note-9',
-    },
-    {
-      id: '2',
-      title: 'This is the thdh',
-      description: 'This is the description djcdj ',
-      category: 'Note-10',
-    },
-    {
-      id: '2',
-      title: 'This is the thdh',
-      description: 'This is the description djcdj ',
-      category: 'Note-11',
-    },
-    {
-      id: '2',
-      title: 'This is the thdh',
-      description: 'This is the description djcdj ',
-      category: 'Note-13',
-    },
-    {
-      id: '2',
-      title: 'This is the thdh',
-      description: 'This is the description djcdj ',
-      category: 'Note-14',
-    },
-  ];
+  const handleListItemBlur = () => {
+    setSelectedIndex(null);
+  };
 
   // To populate the list with the categories currently available
   const uniqueCategories = Array.from(
-    new Set(notesList.map((note) => note.category))
+    new Set(data?.map((note) => note.category))
   );
 
   const theme = useTheme();
@@ -122,6 +54,7 @@ const Categories = () => {
             selected={selectedIndex === category}
             key={index}
             onClick={(e) => handleListItemClick(e, category)}
+            onBlur={handleListItemBlur}
             sx={{
               '&.Mui-selected': {
                 backgroundColor: '#202020',

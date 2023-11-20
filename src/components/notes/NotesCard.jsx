@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -9,9 +9,16 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import CustomDialog from '../CustomDialog';
+import DeleteDialog from '../deleteDialog';
+import { useDispatch } from 'react-redux';
+import { updateCurrentNoteId } from '../../features/notes/notesSlice';
 
 const StyledCard = styled(Card)(({ theme }) => ({
   margin: theme.spacing(2),
+  cursor: 'pointer',
 }));
 
 const StyledTitle = styled(Typography)(({ theme }) => ({
@@ -19,7 +26,7 @@ const StyledTitle = styled(Typography)(({ theme }) => ({
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
-  fontSize: '36px',
+  fontSize: '20px',
   fontWeight: 'bold',
 }));
 
@@ -48,8 +55,30 @@ const ActionsBox = styled(Box)(({ theme }) => ({
 }));
 
 const NotesCard = ({ note }) => {
+  const [categoryDialogOpen, setCategoryDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [currentNoteId, setCurrentNoteId] = useState(null);
+
+  const username = localStorage.getItem('username');
+
+  const handleUpdateCategory = () => {
+    setCategoryDialogOpen(true);
+  };
+
+  const handleDeleteNote = () => {
+    setDeleteDialogOpen(true);
+  };
+
+  const dispatch = useDispatch();
+
+  const handleUpdateCurrentNoteId = (id) => {
+    setCurrentNoteId(id);
+    dispatch(updateCurrentNoteId(currentNoteId));
+  };
+
   return (
-    <StyledCard>
+    <StyledCard onClick={() => handleUpdateCurrentNoteId(note.id)}>
+      <ToastContainer />
       <Grid container spacing={1}>
         <Grid item xs={10}>
           <CardContent sx={{ pr: 1 }}>
@@ -72,16 +101,30 @@ const NotesCard = ({ note }) => {
         <Grid item xs={2}>
           <CardActions sx={{ height: '100%', pl: 0, pb: '16px', pt: '11px' }}>
             <ActionsBox>
-              <IconButton>
+              <IconButton onClick={() => handleUpdateCategory()}>
                 <LocalOfferIcon sx={{ color: '#407bff' }} />
               </IconButton>
-              <IconButton>
+              <IconButton onClick={() => handleDeleteNote()}>
                 <DeleteIcon sx={{ color: '#9c0c0c' }} />
               </IconButton>
             </ActionsBox>
           </CardActions>
         </Grid>
       </Grid>
+      {categoryDialogOpen && (
+        <CustomDialog
+          id={note.id}
+          username={username}
+          openDialog={setCategoryDialogOpen}
+        />
+      )}
+      {deleteDialogOpen && (
+        <DeleteDialog
+          id={note.id}
+          username={username}
+          openDialog={setDeleteDialogOpen}
+        />
+      )}
     </StyledCard>
   );
 };

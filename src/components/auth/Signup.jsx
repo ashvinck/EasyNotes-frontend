@@ -33,7 +33,8 @@ const registrationSchema = yup.object({
     .string()
     .min(3, 'Please enter a username')
     .max(15, 'Please enter a shorter username')
-    .required('Please provide a valid username'),
+    .required('Please provide a valid username')
+    .transform((value) => value.toLowerCase()),
 
   email: yup
     .string()

@@ -4,8 +4,8 @@ import { API } from '../../API';
 const baseQuery = fetchBaseQuery({
   baseUrl: API,
   credentials: 'include',
-  prepareHeaders: (headers, { getState }) => {
-    const token = getState()?.userAuth?.token;
+  prepareHeaders: (headers) => {
+    const token = localStorage.getItem('userAuth');
     if (token) {
       headers.set('authorization', `Bearer ${token}`);
     }
@@ -24,7 +24,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
       extraOptions
     );
 
-    const { accessToken } = refreshResult.data;
+    const { accessToken } = refreshResult;
 
     if (accessToken) {
       result = await baseQuery(args, api, extraOptions);
