@@ -1,40 +1,34 @@
-import React from 'react'
-import styled from '@emotion/styled';
-import Paper from '@mui/material/Paper';
+import React from 'react';
 import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
 import bgImage from '../assets/background-image.webp';
 
-
-// Styled Box
-const StyledBox = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  minHeight: `calc(100vh - 70px)`,
-}));
-
-// Styled Paper
-const StyledPaper = styled(Paper)(({ theme }) => ({
-  margin: theme.spacing(2),
-}));
-
-// Styled Card
-const StyledCard = styled(Card)(({ theme }) => ({
-  backgroundImage: `url(${bgImage})`,
-}));
-
-const CardWrapper = ({children}) => {
+const CardWrapper = ({ children }) => {
   return (
-    <StyledBox>
-      <StyledPaper elevation={3}>
-        <StyledCard variant='outlined'>
-         {children}
-        </StyledCard>
-      </StyledPaper>
-    </StyledBox>
-  )
-}
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '100vh',
+        backgroundImage: `url(${bgImage})`,
+      }}
+    >
+      <Box
+        sx={{
+          backgroundColor: 'rgba(255, 255, 255, 0.08)',
+          backgroundRadius: '16px',
+          boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+          backdropFilter: 'blur(5.5px)',
+          WebkitBackdropFilter: 'blur(5.5px)',
+          border: '1px solid rgba(255, 255, 255, 0.3)',
+          borderRadius: '10px',
+        }}
+        elevation={3}
+      >
+        {children}
+      </Box>
+    </Box>
+  );
+};
 
 export default CardWrapper;

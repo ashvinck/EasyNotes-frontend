@@ -4,6 +4,7 @@ const initialState = {
   searchTerm: '',
   showCategories: true,
   currentNodeId: null,
+  searchCategory: '',
 };
 
 export const notesSlice = createSlice({
@@ -20,14 +21,22 @@ export const notesSlice = createSlice({
     updateCurrentNoteId: (state, action) => {
       state.currentNodeId = action.payload;
     },
+    searchByCategory: (state, action) => {
+      state.searchCategory = action.payload;
+    },
   },
 });
 
-export const { updateSearchTerm, toggleCategory, updateCurrentNoteId } =
-  notesSlice.actions;
+export const {
+  updateSearchTerm,
+  toggleCategory,
+  updateCurrentNoteId,
+  searchByCategory,
+} = notesSlice.actions;
 
 export const selectSearchTerm = (state) => state?.notes?.searchTerm;
 export const selectToggleCategory = (state) => state?.notes?.showCategories;
 export const selectCurrentNoteId = (state) => state?.notes?.currentNodeId;
+export const selectSearchCategory = (state) => state?.notes?.searchCategory;
 
 export default notesSlice.reducer;

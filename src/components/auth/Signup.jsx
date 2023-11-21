@@ -84,10 +84,10 @@ const Signup = () => {
   const signupUser = (credentials) => {
     signup(credentials)
       .unwrap()
-      .then((response) => toast.success(response.message)) // Show success message using toast
+      .then((response) => toast.success(response.message))
       .catch((error) => {
         const errorMessage = error?.data?.message || 'An error occurred.';
-        toast.error(errorMessage); // Show error message using toast
+        toast.error(errorMessage);
       });
   };
 

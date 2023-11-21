@@ -10,7 +10,6 @@ const StyledBoxWrapper = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.secondary.dark,
   height: '100%',
   color: 'rgb(208,208,208)',
-  fontFamily: 'Raleway, sans-serif',
   paddingTop: theme.spacing(3),
 }));
 

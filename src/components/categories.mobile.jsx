@@ -1,7 +1,7 @@
 import { Box, Card, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateSearchTerm } from '../features/notes/notesSlice';
+import { searchByCategory } from '../features/notes/notesSlice';
 import styled from '@emotion/styled';
 import { useGetAllNotesQuery } from '../features/notes/notesApiSlice';
 
@@ -43,7 +43,7 @@ const CategoriesMob = () => {
   const dispatch = useDispatch();
 
   const handleCategoryClick = (category) => {
-    dispatch(updateSearchTerm(category));
+    dispatch(searchByCategory(category));
     setActiveCategory(category);
   };
 
@@ -58,7 +58,7 @@ const CategoriesMob = () => {
         <Typography sx={{ color: 'rgb(122, 122, 122)' }}>Categories</Typography>
       </StyledWrapper>
       <StyledBox>
-        {uniqueCategories.map((category, index) => (
+        {uniqueCategories?.map((category, index) => (
           <StyledCardContainer key={index}>
             <StyledCard
               key={index}

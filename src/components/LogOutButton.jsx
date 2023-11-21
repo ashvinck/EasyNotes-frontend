@@ -20,10 +20,12 @@ const StyledLogoutPaper = styled(Paper)(({ theme }) => ({
 const LogOutButton = ({ setAnchorEl, anchorEl }) => {
   const dispatch = useDispatch();
 
+  const handleOnClose = () => {
+    setAnchorEl(null);
+  };
   // Logout handler function
   const handleLogout = () => {
     console.log('Logout');
-    setAnchorEl(null);
     dispatch(logOut());
   };
 
@@ -33,7 +35,7 @@ const LogOutButton = ({ setAnchorEl, anchorEl }) => {
     <Popover
       open={open}
       anchorEl={anchorEl}
-      onClose={handleLogout}
+      onClose={handleOnClose}
       anchorOrigin={{
         vertical: 'bottom',
         horizontal: 'center',

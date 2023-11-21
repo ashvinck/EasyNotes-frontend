@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
+import { useTheme } from '@emotion/react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -13,16 +14,13 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CustomDialog from '../CustomDialog';
 import DeleteDialog from '../deleteDialog';
-import { useDispatch } from 'react-redux';
-import { updateCurrentNoteId } from '../../features/notes/notesSlice';
-
-const StyledCard = styled(Card)(({ theme }) => ({
-  margin: theme.spacing(2),
-  cursor: 'pointer',
-}));
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  selectCurrentNoteId,
+  updateCurrentNoteId,
+} from '../../features/notes/notesSlice';
 
 const StyledTitle = styled(Typography)(({ theme }) => ({
-  fontFamily: 'Raleway, sans-serif',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
@@ -39,7 +37,6 @@ const StyledDescription = styled(Typography)(({ theme }) => ({
 }));
 
 const StyledTimeStamp = styled(Typography)(({ theme }) => ({
-  fontFamily: 'Raleway, sans-serif',
   color: 'rgba(94,94,94,0.9)',
   fontSize: '12px',
   fontWeight: '500',
@@ -57,9 +54,11 @@ const ActionsBox = styled(Box)(({ theme }) => ({
 const NotesCard = ({ note }) => {
   const [categoryDialogOpen, setCategoryDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [currentNoteId, setCurrentNoteId] = useState(null);
+
+  const theme = useTheme();
 
   const username = localStorage.getItem('username');
+  const activeNote = useSelector(selectCurrentNoteId);
 
   const handleUpdateCategory = () => {
     setCategoryDialogOpen(true);
@@ -72,20 +71,30 @@ const NotesCard = ({ note }) => {
   const dispatch = useDispatch();
 
   const handleUpdateCurrentNoteId = (id) => {
-    setCurrentNoteId(id);
-    dispatch(updateCurrentNoteId(currentNoteId));
+    dispatch(updateCurrentNoteId(id));
   };
 
   return (
-    <StyledCard onClick={() => handleUpdateCurrentNoteId(note.id)}>
+    <Card
+      sx={{
+        cursor: 'pointer',
+        margin: 1,
+        backgroundColor:
+          activeNote === note.id ? theme.palette.primary.light : 'white',
+      }}
+      onClick={() => handleUpdateCurrentNoteId(note.id)}
+    >
       <ToastContainer />
       <Grid container spacing={1}>
         <Grid item xs={10}>
           <CardContent sx={{ pr: 1 }}>
+            {/* ---- Title ------- */}
             <StyledTitle variant='h6'>{note.title}</StyledTitle>
+            {/* ----- Description ----- */}
             <StyledDescription variant='subtitle1'>
               {note.description}
             </StyledDescription>
+            {/* ---- Last Modified ------ */}
             <small>
               <StyledTimeStamp>
                 {' '}
@@ -98,12 +107,15 @@ const NotesCard = ({ note }) => {
             </small>
           </CardContent>
         </Grid>
+        {/* ------ Actions ------- */}
         <Grid item xs={2}>
           <CardActions sx={{ height: '100%', pl: 0, pb: '16px', pt: '11px' }}>
             <ActionsBox>
+              {/* ------- Add Category --------- */}
               <IconButton onClick={() => handleUpdateCategory()}>
                 <LocalOfferIcon sx={{ color: '#407bff' }} />
               </IconButton>
+              {/* --------- Delete Note ------- */}
               <IconButton onClick={() => handleDeleteNote()}>
                 <DeleteIcon sx={{ color: '#9c0c0c' }} />
               </IconButton>
@@ -111,6 +123,7 @@ const NotesCard = ({ note }) => {
           </CardActions>
         </Grid>
       </Grid>
+      {/* ----- Add Category Dialogue -------- */}
       {categoryDialogOpen && (
         <CustomDialog
           id={note.id}
@@ -118,6 +131,7 @@ const NotesCard = ({ note }) => {
           openDialog={setCategoryDialogOpen}
         />
       )}
+      {/* ------ Delete Dialogue ------- */}
       {deleteDialogOpen && (
         <DeleteDialog
           id={note.id}
@@ -125,7 +139,7 @@ const NotesCard = ({ note }) => {
           openDialog={setDeleteDialogOpen}
         />
       )}
-    </StyledCard>
+    </Card>
   );
 };
 
