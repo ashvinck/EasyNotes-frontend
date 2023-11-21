@@ -34,6 +34,11 @@ export const notesApiSlice = apiSlice.injectEndpoints({
       providesTags: ['notes'],
     }),
 
+    getNoteById: builder.query({
+      query: ({ id, username }) => `notes/${username}/get-note/${id}`,
+      providesTags: ['notes'],
+    }),
+
     updateCategory: builder.mutation({
       query: ({ id, username, category }) => ({
         url: `notes/${username}/update-category/${id}`,
@@ -43,9 +48,9 @@ export const notesApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ['notes'],
     }),
 
-    getNoteById: builder.query({
-      query: ({ id, username }) => `notes/${username}/get-note/${id}`,
-      providesTags: ['notes'],
+    getNotesByCategory: builder.query({
+      query: ({ username, category }) =>
+        `notes/${username}/get-notes/category/${category}`,
     }),
   }),
 });
@@ -57,4 +62,5 @@ export const {
   useDeleteNoteMutation,
   useGetAllNotesQuery,
   useUpdateCategoryMutation,
+  useGetNotesByCategoryQuery,
 } = notesApiSlice;

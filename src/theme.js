@@ -22,4 +22,11 @@ export const customizations = (mode) => ({
       },
     },
   },
+  typography: {
+    h2: {
+      fontFamily: 'Pacifico, cursive',
+    },
+    fontFamily:
+      'ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Courier New", monospace',
+  },
 });

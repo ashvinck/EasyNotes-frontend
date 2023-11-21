@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import styled from '@emotion/styled';
-import { Box, useTheme } from '@mui/material';
+import { useTheme } from '@mui/material';
+import Box from '@mui/material/Box';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -8,32 +8,25 @@ import Typography from '@mui/material/Typography';
 import FolderIcon from '@mui/icons-material/Folder';
 import { useGetAllNotesQuery } from '../../../features/notes/notesApiSlice';
 import { useDispatch } from 'react-redux';
-import { updateSearchTerm } from '../../../features/notes/notesSlice';
-
-const StyledTypography = styled(Typography)(({ theme }) => ({
-  padding: theme.spacing(2),
-  color: '#7a7a7a',
-  fontFamily: 'Raleway, sans-serif',
-}));
-
-const StyledBoxWrapper = styled(Box)(({ theme }) => ({
-  maxHeight: '550px',
-  overflowY: 'auto',
-}));
+import { searchByCategory } from '../../../features/notes/notesSlice';
 
 const Categories = () => {
-  const [selectedIndex, setSelectedIndex] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(null); // for identifying which category is selected
 
   const dispatch = useDispatch();
 
   const username = localStorage.getItem('username');
+
+  // Getting data from API
   const { data, isLoading } = useGetAllNotesQuery(username);
 
-  const handleListItemClick = (event, category) => {
+  // Identifying which category is selected
+  const handleListItemClick = (category) => {
     setSelectedIndex(category);
-    dispatch(updateSearchTerm(category));
+    dispatch(searchByCategory(category));
   };
 
+  // To unselect a category
   const handleListItemBlur = () => {
     setSelectedIndex(null);
   };
@@ -47,14 +40,19 @@ const Categories = () => {
 
   return (
     <>
-      <StyledTypography variant='h6'>Categories</StyledTypography>
-      <StyledBoxWrapper>
-        {uniqueCategories.map((category, index) => (
+      <Typography
+        variant='h6'
+        sx={{ padding: theme.spacing(2), color: '#7a7a7a' }}
+      >
+        Categories
+      </Typography>
+      <Box sx={{ maxHeight: '550px', overflowY: 'auto' }}>
+        {uniqueCategories?.map((category, index) => (
           <ListItemButton
             selected={selectedIndex === category}
             key={index}
-            onClick={(e) => handleListItemClick(e, category)}
-            onBlur={handleListItemBlur}
+            onClick={() => handleListItemClick(category)}
+            onBlur={() => handleListItemBlur()}
             sx={{
               '&.Mui-selected': {
                 backgroundColor: '#202020',
@@ -79,7 +77,7 @@ const Categories = () => {
             />
           </ListItemButton>
         ))}
-      </StyledBoxWrapper>
+      </Box>
     </>
   );
 };

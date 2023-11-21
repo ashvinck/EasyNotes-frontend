@@ -12,7 +12,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useAddNewNoteMutation } from '../../../features/notes/notesApiSlice';
 import Loading from '../../Loading';
 import { useDispatch } from 'react-redux';
-import { updateSearchTerm } from '../../../features/notes/notesSlice';
+import {
+  searchByCategory,
+  updateSearchTerm,
+} from '../../../features/notes/notesSlice';
 
 const SidebarLinks = () => {
   const [addnewNote, { isLoading }] = useAddNewNoteMutation();
@@ -26,6 +29,7 @@ const SidebarLinks = () => {
   };
 
   const handleViewAllNotes = () => {
+    dispatch(searchByCategory(''));
     dispatch(updateSearchTerm(''));
   };
 
@@ -100,12 +104,7 @@ const SidebarLinks = () => {
               >
                 {icon}
               </ListItemIcon>
-              <ListItemText
-                primary={title}
-                sx={{
-                  fontFamily: 'Raleway, sans-serif',
-                }}
-              />
+              <ListItemText primary={title} />
             </ListItemButton>
           ))}
         </>

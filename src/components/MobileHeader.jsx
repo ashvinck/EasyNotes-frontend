@@ -10,10 +10,15 @@ import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useAddNewNoteMutation } from '../features/notes/notesApiSlice';
 import { useDispatch } from 'react-redux';
-import { toggleCategory, updateSearchTerm } from '../features/notes/notesSlice';
+import {
+  searchByCategory,
+  toggleCategory,
+  updateSearchTerm,
+} from '../features/notes/notesSlice';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LogOutButton from './LogOutButton';
+import { Divider } from '@mui/material';
 uuidv4();
 
 const StyledBox = styled(Box)(({ theme }) => ({
@@ -76,6 +81,7 @@ const MobileHeader = () => {
   };
 
   const handleViewAllNotes = () => {
+    dispatch(searchByCategory(''));
     dispatch(updateSearchTerm(''));
     dispatch(toggleCategory(!showCategories));
   };
@@ -146,6 +152,7 @@ const MobileHeader = () => {
           />
         </StyledWrapper>
       </StyledBox>
+      <Divider />
     </>
   );
 };

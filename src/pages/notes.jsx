@@ -1,21 +1,21 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import Hidden from '@mui/material/Hidden';
 import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import { selectToggleCategory } from '../features/notes/notesSlice.js';
 import Sidebar from '../components/notes/sidebar/Sidebar.jsx';
 import NotesList from '../components/notes/NotesList';
-import AddNotes from '../components/notes/AddNotes';
 import MobileHeader from '../components/mobileHeader.jsx';
-import Box from '@mui/material/Box';
 import CategoriesMob from '../components/categories.mobile.jsx';
-import { useSelector } from 'react-redux';
-import { selectToggleCategory } from '../features/notes/notesSlice.js';
+import UpdateNotes from '../components/notes/NotesEditor.jsx';
 
 const Notes = () => {
   const isVisible = useSelector(selectToggleCategory);
 
   return (
     <>
-      <Hidden smDown>
+      <Hidden mdDown>
         <Grid
           container
           spacing={0}
@@ -33,12 +33,12 @@ const Notes = () => {
             <NotesList />
           </Grid>
           <Grid item md={5} lg={7}>
-            <AddNotes />
+            <UpdateNotes />
           </Grid>
         </Grid>
       </Hidden>
 
-      <Hidden smUp>
+      <Hidden mdUp>
         <MobileHeader />
         {isVisible && <CategoriesMob />}
         <Box
@@ -69,7 +69,7 @@ const Notes = () => {
               height: '100%',
             }}
           >
-            <AddNotes />
+            <UpdateNotes />
           </Box>
         </Box>
       </Hidden>

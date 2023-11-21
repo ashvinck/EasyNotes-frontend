@@ -21,10 +21,12 @@ const StyledBoxWrapper = styled(Box)(({ theme }) => ({
 }));
 
 const StyledTypography = styled(Typography)(({ theme }) => ({
-  fontFamily: 'Source Code Pro, monospace',
   fontWeight: 'bold',
   paddingLeft: theme.spacing(1),
   color: 'white',
+  '&:hover': {
+    color: theme.palette.primary.main,
+  },
 }));
 
 const StyledLogoutPaper = styled(Paper)(({ theme }) => ({
@@ -44,11 +46,12 @@ const Account = () => {
     setAnchorEl(event.currentTarget);
   };
 
+  const username = localStorage.getItem('username');
+
   const open = Boolean(anchorEl);
 
   // Logout handler function
   const handleLogout = () => {
-    console.log('Logout');
     setAnchorEl(null);
     dispatch(logOut());
   };
@@ -56,7 +59,7 @@ const Account = () => {
   return (
     <StyledBoxWrapper>
       <AccountCircleIcon fontSize='large' color='primary' />
-      <StyledTypography>Ashvin C K</StyledTypography>
+      <StyledTypography>{username}</StyledTypography>
       <IconButton onClick={handleClick}>
         <ExpandMoreIcon sx={{ color: 'white' }} />
       </IconButton>

@@ -1,12 +1,17 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
+import Hidden from '@mui/material/Hidden';
+import Typography from '@mui/material/Typography';
 import SearchBar from '../SearchBar';
-import { Divider, Hidden, Typography } from '@mui/material';
 import NotesCard from './NotesCard';
 import { useGetAllNotesQuery } from '../../features/notes/notesApiSlice';
-import { useSelector } from 'react-redux';
-import { selectSearchTerm } from '../../features/notes/notesSlice';
+import {
+  selectSearchCategory,
+  selectSearchTerm,
+} from '../../features/notes/notesSlice';
 
 const StyledBox = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.secondary.light,
@@ -20,42 +25,46 @@ const NotesList = () => {
   const { data, isLoading } = useGetAllNotesQuery(username);
 
   const searchTerm = useSelector(selectSearchTerm);
+  const categorySearchTerm = useSelector(selectSearchCategory);
   const searchQuery = searchTerm.toLowerCase();
 
-  const notesList = searchQuery
-    ? data.filter((note) => {
-        const titleIncludesQuery = note.title
-          .toLowerCase()
-          .includes(searchQuery);
-        const descriptionIncludesQuery = note.description
-          .toLowerCase()
-          .includes(searchQuery);
+  const notesList = categorySearchTerm
+    ? data?.filter((note) => {
         const categoryIncludesQuery =
-          note.category && note.category.toLowerCase().includes(searchQuery);
-
-        return (
-          titleIncludesQuery ||
-          descriptionIncludesQuery ||
-          categoryIncludesQuery
-        );
+          note?.category && note?.category.includes(categorySearchTerm);
+        return categoryIncludesQuery;
+      })
+    : searchQuery
+    ? data?.filter((note) => {
+        const titleIncludesQuery = note?.title
+          .toLowerCase()
+          .includes(searchQuery);
+        const descriptionIncludesQuery = note?.description
+          .toLowerCase()
+          .includes(searchQuery);
+        return titleIncludesQuery || descriptionIncludesQuery;
       })
     : data;
 
   return (
     <StyledBox>
-      <Hidden smDown>
+      <Hidden mdDown>
         <SearchBar />
         <Divider sx={{ m: 2 }} />
       </Hidden>
 
-      {notesList?.length === 0 ? (
-        <Typography
-          sx={{ textAlign: 'center', fontFamily: 'Source Code Pro, monospace' }}
-        >
-          Nothing to see here
-        </Typography>
+      {isLoading ? (
+        <Typography sx={{ textAlign: 'center' }}>Loading ...</Typography>
       ) : (
-        notesList?.map((note) => <NotesCard note={note} key={note.id} />)
+        <>
+          {notesList?.length === 0 ? (
+            <Typography sx={{ textAlign: 'center' }}>
+              Nothing to see here
+            </Typography>
+          ) : (
+            notesList?.map((note) => <NotesCard note={note} key={note.id} />)
+          )}
+        </>
       )}
     </StyledBox>
   );

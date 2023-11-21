@@ -12,9 +12,7 @@ import {
 } from '../../features/notes/notesApiSlice';
 import { selectCurrentNoteId } from '../../features/notes/notesSlice';
 
-/**
- * Custom styles for the component
- */
+// Wrapper for the component
 const StyledBoxWrapper = styled(Box)(({ theme }) => ({
   padding: theme.spacing(3),
   border: '3px solid #D3D3D3',
@@ -25,7 +23,7 @@ const StyledBoxWrapper = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
 }));
 
-const AddNotes = () => {
+const UpdateNotes = () => {
   // to focus on the text editor when a note is clicked
   const textAreaRef = useRef(null);
 
@@ -57,7 +55,6 @@ const AddNotes = () => {
         description: description,
         category: data[0]?.category || 'Note-1',
       };
-      console.log(updatedData);
       updateNote({
         id: id,
         username: username,
@@ -69,6 +66,8 @@ const AddNotes = () => {
           toast.error(errMessage);
         });
     }
+    // To prevent save the previous info to new note
+    textAreaRef.current.value = '';
   };
 
   const extractTitle = (text) => {
@@ -105,6 +104,6 @@ const AddNotes = () => {
   );
 };
 
-export default AddNotes;
+export default UpdateNotes;
 {
 }

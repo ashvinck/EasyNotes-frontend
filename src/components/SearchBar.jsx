@@ -8,11 +8,14 @@ import { updateSearchTerm } from '../features/notes/notesSlice';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: theme.palette.primary.light,
+  backgroundColor: 'white',
   marginRight: theme.spacing(2),
   marginLeft: theme.spacing(2),
   border: '1px solid #D3D3D3',
   width: 'auto',
+  '&:hover': {
+    backgroundColor: theme.palette.primary.light,
+  },
   [theme.breakpoints.down('sm')]: {
     marginLeft: 0,
   },

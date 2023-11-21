@@ -1,8 +1,3 @@
-.paper{
-  min-height: 100vh;
-  min-width: 100vw;
-  border-radius: 0px;
-}
 
 textarea {
   border: none;
@@ -10,6 +5,12 @@ textarea {
   width: 100%;
   box-sizing: border-box;
   outline: none;
+}
+
+.paper {
+  min-height: 100vh;
+  min-width: 100vw;
+  border-radius: 0px;
 }
 
 .centre-div{
