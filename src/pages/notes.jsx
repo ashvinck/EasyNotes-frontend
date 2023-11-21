@@ -6,7 +6,8 @@ import Box from '@mui/material/Box';
 import { selectToggleCategory } from '../features/notes/notesSlice.js';
 import Sidebar from '../components/notes/sidebar/Sidebar.jsx';
 import NotesList from '../components/notes/NotesList';
-import MobileHeader from '../components/mobileHeader.jsx';
+import MobileHeader from '../components/MobileHeader.jsx';
+import Box from '@mui/material/Box';
 import CategoriesMob from '../components/categories.mobile.jsx';
 import UpdateNotes from '../components/notes/NotesEditor.jsx';
 
